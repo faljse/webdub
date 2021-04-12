@@ -1,0 +1,47 @@
+{
+    "Host": "127.0.0.1",
+    "Port": "4545",
+    "Lights": [
+        {
+            "id": 1,
+            "name": "Steckdose Links",
+            "room": "OG/Mitte",
+            "type": "Relay",
+            "out":"CONTROLLINO_PA0"
+        },
+        {
+            "id": 2,
+            "name": "Steckdose Links",
+            "room": "OG/Mitte",
+            "type": "Relay",
+            "out":"CONTROLLINO_PA4"
+        },
+        {
+            "id": 3,
+            "name": "Steckdose",
+            "room": "OG/Ost",
+            "type": "Relay",
+            "out": "CONTROLLINO_PA1"
+        },
+        {   "id": 4,
+            "name": "Steckdose",
+            "room": "OG/West",
+            "type": "Relay",
+            "out": "CONTROLLINO_PA2"
+        },
+        {
+            "id": 5,
+            "name": "Steckdose",
+            "room": "Bad",
+            "type": "Relay",
+            "out": "CONTROLLINO_PA3"
+        },
+        {
+            "id": 6,
+            "name": "Steckdose",
+            "room": "Kammerl",
+            "type": "Relay",
+            "out": "CONTROLLINO_PA3"
+        }           
+    ]
+}

@@ -1,0 +1,20 @@
+<html>
+<head>
+    <link rel="stylesheet" href="index.css">
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table id="configTable" v-if="config">
+            <tr v-for="c in config.Lights">
+                <td><a :href="'/api/item/'+ c.name">  {{ c.room + " " + c.name }}</a></td>
+                <td><input type="button" value="OFF" class="readButton" v-on:click="sendOFF" /></td>
+                <td><input type="text" value="" name="rwtext" /><label class="error"></label></td>
+                <td><input type="button" value="ON" v-on:click="sendON(c.id)" /></td>
+                <td>{{ c.out }}</td>
+            </tr>
+        </table>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

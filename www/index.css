@@ -1,0 +1,30 @@
+html, body {
+    margin: 5px;
+    padding: 0;
+}
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+tr {
+    vertical-align:top;
+}
+
+td {
+    vertical-align:top;
+}
+
