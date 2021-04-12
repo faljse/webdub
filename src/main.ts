@@ -15,6 +15,7 @@ class Main {
     httpPort = 8000;
 
     constructor() {
+        this.buildConfig();
         let app = express();
         app.use(bodyParser.json())
         app.use('/', express.static('www'));
@@ -39,6 +40,29 @@ class Main {
             console.log(`⚡️[server]: Server is running at https://localhost:${this.httpPort}`);
         });
 
+    }
+
+    buildConfig() {
+        let configText=fs.readFileSync('config.json').toString();
+        let config = JSON.parse(configText);
+        let lights=config['Lights'];
+        let lightCode="";
+        let idx=0;
+        for (let id in lights) {
+            let light=lights[id];
+            console.log("o." + id + " = " + light + light.type);
+            if(light.type=="Relay") {
+                lightCode+=`lights[${idx}] = new Relay(${id}, ${light.output})\r\n`
+            }
+            else if(light.type=="Dimmer") {
+                lightCode+=`lights[${idx}] = new Dimmer(${id}, ${light.dmxCh})\r\n`
+
+            }
+            idx++;
+          }
+
+        console.log(lightCode);
+        
     }
 }
 
