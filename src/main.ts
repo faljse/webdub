@@ -77,7 +77,7 @@ class Main {
         for(let id in buttons) {
             let button = buttons[id];
             console.log(button);
-            buttonsCode+=`buttons[${bIdx}] = new Button(${id}, ${button.input});\r\n`
+            buttonsCode+=`buttons[${bIdx}] = new MButton(${id}, ${button.input});\r\n`
             buttonsCode+=this.buildbuttonaction(Number(id), 0, button.A, buttonsCode);
             buttonsCode+=this.buildbuttonaction(Number(id), 1, button.B, buttonsCode);
             buttonsCode+=this.buildbuttonaction(Number(id), 2, button.C, buttonsCode);
@@ -85,16 +85,29 @@ class Main {
 
             bIdx++;
         }
+        let header=`#ifndef CONFIG_H
+#define CONFIG_H
 
-        let header=`Light *lights[${idx}];\r\n`;
-        header+=`Action *actions[${aIdx}];\r\n`
-        header+=`Button *buttons[${bIdx}];\r\n`
-        header+=`ButtonAction *buttonactions[${this.bAIdx}];\r\n`
+#include <Controllino.h>
+#include "light.h"
+#include "dimmer.h"
+#include "relay.h"
+#include "action.h"
+#include "mbutton.h"
+#include "buttonaction.h"\r\n\r\n`
 
+        header+=`Light *lights[${idx}];\r\n`;
+        header+=`Action *actions[${aIdx}];\r\n`;
+        header+=`MButton *buttons[${bIdx}];\r\n`;
+        header+=`ButtonAction *buttonactions[${this.bAIdx}];\r\n\r\n`;
+        header+=`void buildConfig() {\r\n`;
 
         header+=lightCode;
         header+=actionCode;
         header+=buttonsCode;
+        header+=`}
+#endif`
+
         console.log(header);       
     }
 
