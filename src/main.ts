@@ -41,7 +41,7 @@ class Main {
         });
 
     }
-
+    bAIdx=0;
     buildConfig() {
         let configText=fs.readFileSync('config.json').toString();
         let config = JSON.parse(configText);
@@ -50,19 +50,60 @@ class Main {
         let idx=0;
         for (let id in lights) {
             let light=lights[id];
-            console.log("o." + id + " = " + light + light.type);
+            light.idx=idx;
             if(light.type=="Relay") {
-                lightCode+=`lights[${idx}] = new Relay(${id}, ${light.output})\r\n`
+                lightCode+=`lights[${idx}] = new Relay(${id}, ${light.output});\r\n`
             }
             else if(light.type=="Dimmer") {
-                lightCode+=`lights[${idx}] = new Dimmer(${id}, ${light.dmxCh})\r\n`
-
+                lightCode+=`lights[${idx}] = new Dimmer(${id}, ${light.dmxCh});\r\n`
             }
             idx++;
-          }
+        }
 
-        console.log(lightCode);
+        let actionsets=config['ActionSets'];
+        let actionCode="";
+        let aIdx=0;
+        for(let id in actionsets) {
+            let aset=actionsets[id];
+            for(let action of aset.actions) {              
+                actionCode+=`actions[${aIdx}] = new Action(${id}, ${lights[action.idLight].idx}, CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
+                aIdx++;
+            }
+        }
+        let buttons=config['Buttons'];
+        let buttonsCode="";
+        let bIdx=0;
         
+        for(let id in buttons) {
+            let button = buttons[id];
+            console.log(button);
+            buttonsCode+=`buttons[${bIdx}] = new Button(${id}, ${button.input});\r\n`
+            buttonsCode+=this.buildbuttonaction(Number(id), 0, button.A, buttonsCode);
+            buttonsCode+=this.buildbuttonaction(Number(id), 1, button.B, buttonsCode);
+            buttonsCode+=this.buildbuttonaction(Number(id), 2, button.C, buttonsCode);
+            buttonsCode+=this.buildbuttonaction(Number(id), 3, button.D, buttonsCode);
+
+            bIdx++;
+        }
+
+        let header=`Light *lights[${idx}];\r\n`;
+        header+=`Action *actions[${aIdx}];\r\n`
+        header+=`Button *buttons[${bIdx}];\r\n`
+        header+=`ButtonAction *buttonactions[${this.bAIdx}];\r\n`
+
+
+        header+=lightCode;
+        header+=actionCode;
+        header+=buttonsCode;
+        console.log(header);       
+    }
+
+    buildbuttonaction(buttonId: number, buttonSubId: number, actionids: number[], buttonsCode: string) :string {
+        let code="";
+        for(let i=0;i!=actionids.length; i++) {
+            code+=`buttonactions[${this.bAIdx++}] = new ButtonAction(${buttonId}, ${buttonSubId}, ${actionids[i]});\r\n`
+        }
+        return code;
     }
 }
 
