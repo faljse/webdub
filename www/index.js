@@ -12,9 +12,9 @@ var app = new Vue({
           this.config = await res.json();
         },
         async sendON(id) {
-          let data = {cmd: "ON",
-                      id: id,
-                      value: -1};
+          let data = {"cmd": "ON",
+                      "id": id,
+                      "value": -1};
           await this.send(data);
 
         },

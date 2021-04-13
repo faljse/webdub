@@ -11,7 +11,7 @@ declare global {
 
 class Main {
     config = null;
-    client = null;
+    client: udp.Socket = null;
     httpPort = 8000;
 
     constructor() {
@@ -28,13 +28,17 @@ class Main {
             res.send(configText);
         })
 
-        app.post('/sendUDP', (req, res) => {
+        app.post('/sendUDP', (req, res) => { 
             let r:JsonUDP = req.body;
-            let sendString = r.cmd.paddingLeft("    ")
-                + "."+r.id.toString().paddingLeft("    ") 
-                + "."+r.value.toString().paddingLeft("    ");
-                + "\r\n"
-            this.client.send(sendString, this.config.Port, this.config.Host);            
+            // let sendString = r.cmd.paddingLeft("    ")
+            //     + "."+r.id.toString().paddingLeft("    ") 
+            //     + "."+r.value.toString().paddingLeft("    ");
+            //     + "\r\n"
+            let sendData= new Uint8Array(2); 
+            sendData[0]=2;
+            sendData[1]=r.id;
+            this.client.send(sendData, this.config.Port, this.config.Host);   
+            res.send();
         })
         app.listen(this.httpPort, () => {
             console.log(`⚡️[server]: Server is running at https://localhost:${this.httpPort}`);
