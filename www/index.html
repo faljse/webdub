@@ -7,7 +7,7 @@
     <div id="app">
         <table id="configTable" v-if="config">
             <tr v-for="(c, key) in config.ActionSets">
-                <td><a :href="'/api/item/'+ c.name">  {{ c.room + " " + c.name }}</a></td>
+                <td><a :href="'/api/item/'+ c.name">  {{c.name }}</a></td>
                 <td><input type="text" value="" name="rwtext" /><label class="error"></label></td>
                 <td><input type="button" value="ON" v-on:click="sendON(key)" /></td>
                 <td>{{ c.out }}</td>

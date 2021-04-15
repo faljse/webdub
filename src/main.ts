@@ -49,38 +49,68 @@ class Main {
     buildConfig() {
         let configText=fs.readFileSync('config.json').toString();
         let config = JSON.parse(configText);
-        let lights=config['Lights'];
+        let relay=config['Relay'];
+        let dimmer=config['Dimmer'];
         let lightCode="";
+
+
+        lightCode+=`Relay relay[${Object.keys(relay).length}];\r\n`;
+        lightCode+=`Dimmer dimmer[${Object.keys(dimmer).length}];\r\n`;
+
         let idx=0;
-        for (let id in lights) {
-            let light=lights[id];
-            light.idx=idx;
-            if(light.type=="Relay") {
-                lightCode+=`lights[${idx}] = new Relay(${id}, ${light.output});\r\n`
-            }
-            else if(light.type=="Dimmer") {
-                lightCode+=`lights[${idx}] = new Dimmer(${id}, ${light.dmxCh});\r\n`
-            }
+        for (let id in relay) {
+            let r=relay[id];
+            r.idx=idx;
+            lightCode+=`relay[${idx}] = Relay(${id}, ${r.output});\r\n`
+            lightCode+=`pinMode(${r.output}, OUTPUT);\r\n`
             idx++;
         }
 
-        let actionsets=config['ActionSets'];
-        let actionCode="";
-        let aIdx=0;
-        for(let id in actionsets) {
-            let aset=actionsets[id];
-            for(let action of aset.actions) {              
-                actionCode+=`actions[${aIdx}] = new Action(${id}, ${lights[action.idLight].idx}, CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
-                aIdx++;
-            }
+        idx=0;
+        for (let id in dimmer) {
+            let d=dimmer[id];
+            d.idx=idx;
+            lightCode+=`dimmer[${idx}] = Dimmer(${id}, ${d.dmxCh});\r\n`
+            idx++;
         }
+
+
+        let actionsetgroups=config['ActionSetGroups'];
+        let actionCode="";
+        let asgIdx=0;
+        actionCode+=`ActionSetGroup asg[${Object.keys(actionsetgroups).length}];\r\n`
+
+        for(let asg of actionsetgroups) {
+            let asIdx=0;
+            for(let actionset of asg.actions) {
+                actionCode+=`Action actions${asgIdx}_${asIdx}[${actionset.length}];\r\n`
+                actionCode+=`ActionSet as${asgIdx}_${asIdx}[${asg.actions.length}];\r\n`
+                let aIdx=0;
+                for(let action of actionset) {
+                    if(action.idRelay) {
+                        actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(&relay[${relay[action.idRelay].idx}], CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
+                    }
+                    console.log(action.idDimmer);
+                    if(action.idDimmer) {
+                        actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}], CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
+ 
+                    } 
+                    aIdx++;
+                }
+                actionCode+=`as${asgIdx}_${asIdx}[${asIdx}]=ActionSet(1, ${actionset.length}, actions${asgIdx}_${asIdx});\r\n`
+                asIdx++;
+            }
+            console.log("asg");
+            console.log(asg);
+            actionCode+=`asg[${asgIdx}]=ActionSetGroup(${asg.id}, ${asg.actions.length}, as${asgIdx}_${asIdx-1});\r\n`
+            asgIdx++;
+        } 
         let buttons=config['Buttons'];
         let buttonsCode="";
         let bIdx=0;
         
         for(let id in buttons) {
             let button = buttons[id];
-            console.log(button);
             buttonsCode+=`buttons[${bIdx}] = new MButton(${id}, ${button.input});\r\n`
             buttonsCode+=this.buildbuttonaction(Number(id), 0, button.A, buttonsCode);
             buttonsCode+=this.buildbuttonaction(Number(id), 1, button.B, buttonsCode);
@@ -93,17 +123,14 @@ class Main {
 #define CONFIG_H
 
 #include <Controllino.h>
-#include "light.h"
 #include "dimmer.h"
 #include "relay.h"
 #include "action.h"
+#include "actionset.h"
+#include "actionsetgroup.h"
 #include "mbutton.h"
 #include "buttonaction.h"\r\n\r\n`
 
-        header+=`Light *lights[${idx}];\r\n`;
-        header+=`Action *actions[${aIdx}];\r\n`;
-        header+=`MButton *buttons[${bIdx}];\r\n`;
-        header+=`ButtonAction *buttonactions[${this.bAIdx}];\r\n\r\n`;
         header+=`void buildConfig() {\r\n`;
 
         header+=lightCode;
