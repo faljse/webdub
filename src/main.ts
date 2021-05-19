@@ -45,6 +45,8 @@ class Main {
         });
 
     }
+
+
     bAIdx=0;
     buildConfig() {
         let configText=fs.readFileSync('config.json').toString();
@@ -79,9 +81,10 @@ class Main {
         let actionCode="";
         let asgIdx=0;
         declCode+=`ActionSetGroup asg[${Object.keys(actionsetgroups).length}];\r\n`
-
+        let asgMap=Object();
         for(let asg of actionsetgroups) {
             let asIdx=0;
+            asgMap[asg.id]=asg;
             declCode+=`ActionSet as${asgIdx}[${asg.actions.length}];\r\n`
             for(let actionset of asg.actions) {
                 declCode+=`Action actions${asgIdx}_${asIdx}[${actionset.length}];\r\n`
@@ -90,7 +93,6 @@ class Main {
                     if(action.idRelay) {
                         actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(0, &relay[${relay[action.idRelay].idx}], CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
                     }
-                    console.log(action.idDimmer);
                     if(action.idDimmer) {
                         actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}],0, CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
  
@@ -100,22 +102,23 @@ class Main {
                 actionCode+=`as${asgIdx}[${asIdx}]=ActionSet(1, ${actionset.length}, actions${asgIdx}_${asIdx});\r\n`
                 asIdx++;
             }
-            console.log("asg");
-            console.log(asg);
+            asg.idx=asgIdx;
             actionCode+=`asg[${asgIdx}]=ActionSetGroup(${asg.id}, ${asg.actions.length}, as${asgIdx});\r\n`
             asgIdx++;
         } 
         let buttons=config['Buttons'];
         let buttonsCode="";
+        declCode+=`AnalogMultiButton buttons[${Object.keys(buttons).length}];\r\n`;
         let bIdx=0;
-        
+        buttonsCode+=`const int voltages[5] = {0, 111, 170, 232, 362};\r\n`
+
         for(let id in buttons) {
             let button = buttons[id];
-            buttonsCode+=`buttons[${bIdx}] = new MButton(${id}, ${button.input});\r\n`
-            buttonsCode+=this.buildbuttonaction(Number(id), 0, button.A, buttonsCode);
-            buttonsCode+=this.buildbuttonaction(Number(id), 1, button.B, buttonsCode);
-            buttonsCode+=this.buildbuttonaction(Number(id), 2, button.C, buttonsCode);
-            buttonsCode+=this.buildbuttonaction(Number(id), 3, button.D, buttonsCode);
+            buttonsCode+=`const ActionSetGroup asg_b${id}[4] = {asg[${asgMap[button.A].idx}], asg[${asgMap[button.B].idx}], asg[${asgMap[button.C].idx}], asg[${asgMap[button.D].idx}]};\r\n`
+
+            buttonsCode+=`buttons[${bIdx}] = AnalogMultiButton(${button.input}, 5, voltages, asg_b${id}, 20, 1024);\r\n`
+            buttonsCode+=`pinMode(${button.input}, INPUT);\r\n`
+
 
             bIdx++;
         }
@@ -128,8 +131,9 @@ class Main {
 #include "action.h"
 #include "actionset.h"
 #include "actionsetgroup.h"
-#include "mbutton.h"
+#include "analogmultibutton.h"
 #include "buttonaction.h"\r\n\r\n`
+
 
 header+=declCode;
 

@@ -6,11 +6,14 @@
           "name": "OG/AZ/Lampe",
           "output": "CONTROLLINO_R0"},
         "2": {
-          "name": "OG/AZ/Lampe2",
+          "name": "OG/Bad/Lampe",
           "output": "CONTROLLINO_R1"},
         "3": {
           "name": "OG/SZ/Lampe",
-          "output": "CONTROLLINO_R2"}
+          "output": "CONTROLLINO_R2"},
+        "4": {
+          "name": "OG/PZ/Lampe",
+          "output": "CONTROLLINO_R4"}
         },
       "Dimmer": {
           "1": {
@@ -26,24 +29,34 @@
             "name":"OG/AZ",
             "actions": [[
               {"idRelay":1, "cmd": "On"},
-              {"idRelay":2, "cmd": "On"},
-              {"idDimmer":1, "cmd": "Dim", "value": 100},
-              {"idDimmer":2, "cmd": "Dim", "value": 100}
+              {"idDimmer":1, "cmd": "Dim", "value": 100}
               ],[
               {"idRelay":1, "cmd": "Off"},
-              {"idRelay":2, "cmd": "Off"},
-              {"idDimmer":1, "cmd": "Dim", "value": 0},
-              {"idDimmer":2, "cmd": "Dim", "value": 0}
+              {"idDimmer":1, "cmd": "Dim", "value": 0}
               ]]
           },{
             "id":"2",
+            "name": "OG/Bad",
+            "actions": [[
+              {"idRelay":2, "cmd": "On"}
+              ],[
+              {"idRelay":2, "cmd": "Off"}
+            ]]
+          },{
+            "id":"3",
             "name": "OG/SZ",
             "actions": [[
-              {"idLight":3, "cmd": "Off"}
+              {"idRelay":3, "cmd": "Off"}
               ],[
-              {"idLight":1, "cmd": "Off"},
-              {"idLight":2, "cmd": "Off"},
-              {"idLight":3, "cmd": "Off"}
+              {"idRelay":3, "cmd": "On"}
+            ]]
+          },{
+            "id":"4",
+            "name": "OG/PZ",
+            "actions": [[
+              {"idRelay":4, "cmd": "Off"}
+              ],[
+              {"idRelay":4, "cmd": "On"}
             ]]
           }
         ]
@@ -54,8 +67,16 @@
           "input": "CONTROLLINO_A0",
           "A": [1],
           "B": [2],
-          "C": [1],
-          "D": [2]
+          "C": [3],
+          "D": [4]
+        },
+        "2": {
+          "name": "OG/SZ",
+          "input": "CONTROLLINO_A1",
+          "A": [1],
+          "B": [2],
+          "C": [3],
+          "D": [4]
         }
       }
 }
