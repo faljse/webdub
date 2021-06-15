@@ -85,25 +85,25 @@ class Main {
         for(let asg of actionsetgroups) {
             let asIdx=0;
             asgMap[asg.id]=asg;
-            declCode+=`ActionSet as${asgIdx}[${asg.actions.length}];\r\n`
-            for(let actionset of asg.actions) {
-                declCode+=`Action actions${asgIdx}_${asIdx}[${actionset.length}];\r\n`
-                let aIdx=0;
-                for(let action of actionset) {
-                    if(action.idRelay) {
-                        actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(0, &relay[${relay[action.idRelay].idx}], CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
-                    }
-                    if(action.idDimmer) {
-                        actionCode+=`actions${asgIdx}_${asIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}],0, CmdType::${action.cmd}${action.value?(", "+action.value):""});\r\n`
- 
-                    } 
-                    aIdx++;
+            // declCode+=`ActionSet as${asgIdx};\r\n`
+            declCode+=`Action actions${asgIdx}[${asg.actions.length}];\r\n`
+            // actionCode+=`as${asgIdx}=ActionSet(1, ${asg.actions.length}, actions${asgIdx});\r\n`
+
+            let aIdx=0;            
+            for(let action of asg.actions) {
+                if(action.idRelay) {
+                    actionCode+=`actions${asgIdx}[${aIdx}] = Action(0, &relay[${relay[action.idRelay].idx}], CmdType::${action.cmd}, ${action.pos}${action.value?(", "+action.value):""});\r\n`
                 }
-                actionCode+=`as${asgIdx}[${asIdx}]=ActionSet(1, ${actionset.length}, actions${asgIdx}_${asIdx});\r\n`
-                asIdx++;
+                if(action.idDimmer) {
+                    actionCode+=`actions${asgIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}],0, CmdType::${action.cmd}, ${action.cmd}${action.value?(", "+action.value):""});\r\n`
+
+                } 
+                aIdx++;
             }
+            asIdx++;
+            
             asg.idx=asgIdx;
-            actionCode+=`asg[${asgIdx}]=ActionSetGroup(${asg.id}, ${asg.actions.length}, as${asgIdx});\r\n`
+            actionCode+=`asg[${asgIdx}]=ActionSetGroup(${asg.id}, ${asg.actions.length}, actions${asgIdx});\r\n`
             asgIdx++;
         } 
         let buttons=config['Buttons'];

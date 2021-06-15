@@ -13,7 +13,10 @@
           "output": "CONTROLLINO_R2"},
         "4": {
           "name": "OG/PZ/Lampe",
-          "output": "CONTROLLINO_R4"}
+          "output": "CONTROLLINO_R3"},
+        "5": {
+            "name": "OG/AZB/Lampe",
+            "output": "CONTROLLINO_R4"}
         },
       "Dimmer": {
           "1": {
@@ -24,59 +27,121 @@
             "dmxCh": 2}
         },
       "ActionSetGroups": [
+        {
+          "id":"0",
+          "name":"Dummy",
+          "actions": []
+        },
           {
             "id":"1",
-            "name":"OG/AZ",
-            "actions": [[
-              {"idRelay":1, "cmd": "On"},
-              {"idDimmer":1, "cmd": "Dim", "value": 100}
-              ],[
-              {"idRelay":1, "cmd": "Off"},
-              {"idDimmer":1, "cmd": "Dim", "value": 0}
-              ]]
+            "name":"OG/AZM",
+            "actions": [
+              {"idRelay":1, "cmd": "On", "pos": 1},
+              {"idRelay":1, "cmd": "Off", "pos": 2}
+              ]
           },{
             "id":"2",
             "name": "OG/Bad",
-            "actions": [[
-              {"idRelay":2, "cmd": "On"}
-              ],[
-              {"idRelay":2, "cmd": "Off"}
-            ]]
+            "actions": [
+              {"idRelay":2, "cmd": "On", "pos":1},
+              {"idRelay":2, "cmd": "Off", "pos":2}
+            ]
           },{
             "id":"3",
             "name": "OG/SZ",
-            "actions": [[
-              {"idRelay":3, "cmd": "Off"}
-              ],[
-              {"idRelay":3, "cmd": "On"}
-            ]]
+            "actions": [
+              {"idRelay":3, "cmd": "Off", "pos": 1},
+              {"idRelay":3, "cmd": "On", "pos": 2}
+            ]
           },{
             "id":"4",
             "name": "OG/PZ",
-            "actions": [[
-              {"idRelay":4, "cmd": "Off"}
-              ],[
-              {"idRelay":4, "cmd": "On"}
-            ]]
+            "actions": [
+              {"idRelay":4, "cmd": "Off", "pos": 1},
+              {"idRelay":4, "cmd": "On", "pos": 2}
+            ]
+          },{
+            "id":"5",
+            "name": "OG/AZB",
+            "actions": [
+              {"idRelay":5, "cmd": "Off", "pos": 1},
+              {"idRelay":5, "cmd": "On", "pos": 2}
+            ]
           }
         ]
       ,
       "Buttons": {
         "1": {
-          "name": "OG/AZ",
+          "name": "OG/SZ",
           "input": "CONTROLLINO_A0",
-          "A": [1],
-          "B": [2],
-          "C": [3],
-          "D": [4]
+          "A": [3],
+          "B": [0],
+          "C": [0],
+          "D": [0]
         },
         "2": {
-          "name": "OG/SZ",
-          "input": "CONTROLLINO_A1",
+          "name": "OG/SZ_BALKON",
+          "input": "CONTROLLINO_A8",
+          "A": [3],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "3": {
+          "name": "OG/AZM",
+          "input": "CONTROLLINO_A6",
           "A": [1],
-          "B": [2],
-          "C": [3],
-          "D": [4]
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "4": {
+          "name": "OG/BAD",
+          "input": "CONTROLLINO_A3",
+          "A": [2],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "5": {
+          "name": "OG/VZ",
+          "input": "CONTROLLINO_A7",
+          "A": [0],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "6": {
+          "name": "OG/AZB",
+          "input": "CONTROLLINO_A1",
+          "A": [5],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "7": {
+          "name": "OG/AZB_BALKON",
+          "input": "CONTROLLINO_A4",
+          "A": [5],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "8": {
+          "name": "OG/Treppe",
+          "input": "CONTROLLINO_A5",
+          "A": [0],
+          "B": [0],
+          "C": [0],
+          "D": [0]
+        },
+        "9": {
+          "name": "OG/PZ",
+          "input": "CONTROLLINO_A2",
+          "A": [4],
+          "B": [0],
+          "C": [0],
+          "D": [0]
         }
       }
 }
