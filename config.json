@@ -4,13 +4,13 @@
     "Relay": {
         "1": {
           "name": "OG/AZ/Lampe",
-          "output": "CONTROLLINO_R0"},
+          "output": "CONTROLLINO_R2"},
         "2": {
           "name": "OG/Bad/Lampe",
           "output": "CONTROLLINO_R1"},
         "3": {
           "name": "OG/SZ/Lampe",
-          "output": "CONTROLLINO_R2"},
+          "output": "CONTROLLINO_R0"},
         "4": {
           "name": "OG/PZ/Lampe",
           "output": "CONTROLLINO_R3"},
@@ -24,7 +24,67 @@
             "dmxCh": 1},
           "2": {
             "name": "OG/AZ/DimWW",
-            "dmxCh": 2}
+            "dmxCh": 2},
+          "3": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 3},
+          "4": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 4},
+          "5": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 5},
+          "6": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 6},
+          "7": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 7},
+          "8": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 8},
+          "9": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 9},
+          "10": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 10},
+          "11": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 11},
+          "12": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 12},
+          "13": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 13},
+          "14": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 14},
+          "15": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 15},
+          "16": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 16},
+          "17": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 17},
+          "18": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 18},
+          "19": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 19},
+          "20": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 20},
+          "21": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 21},
+          "22": {
+            "name": "OG/AZ/DimWW",
+            "dmxCh": 22}
         },
       "ActionSetGroups": [
         {
@@ -67,6 +127,70 @@
               {"idRelay":5, "cmd": "Off", "pos": 1},
               {"idRelay":5, "cmd": "On", "pos": 2}
             ]
+          },{
+            "id":"6",
+            "name": "Test",
+            "actions": [
+              {"idRelay":1, "cmd": "On", "pos": 1},
+              {"idRelay":1, "cmd": "Off", "pos": 2},
+              {"idRelay":2, "cmd": "On", "pos": 2},
+              {"idRelay":2, "cmd": "Off", "pos": 3},
+              {"idRelay":3, "cmd": "On", "pos": 3},
+              {"idRelay":3, "cmd": "Off", "pos": 4},
+              {"idRelay":4, "cmd": "On", "pos": 4},
+              {"idRelay":4, "cmd": "Off", "pos": 5},
+              {"idRelay":5, "cmd": "On", "pos": 5},
+              {"idRelay":5, "cmd": "Off", "pos": 6}
+            ]
+          },{
+            "id":"7",
+            "name": "TestDimmer",
+            "actions": [
+              {"idDimmer":1, "cmd": "Dim", "value": 100, "pos": 1},
+              {"idDimmer":1, "cmd": "Dim", "value": 0, "pos": 2},
+              {"idDimmer":2, "cmd": "Dim", "value": 100, "pos": 2},
+              {"idDimmer":2, "cmd": "Dim", "value": 0, "pos": 3},
+              {"idDimmer":3, "cmd": "Dim", "value": 100, "pos": 3},
+              {"idDimmer":3, "cmd": "Dim", "value": 0, "pos": 4},
+              {"idDimmer":4, "cmd": "Dim", "value": 100, "pos": 4},
+              {"idDimmer":4, "cmd": "Dim", "value": 0, "pos": 5},
+              {"idDimmer":5, "cmd": "Dim", "value": 100, "pos": 5},
+              {"idDimmer":5, "cmd": "Dim", "value": 0, "pos": 6},
+              {"idDimmer":6, "cmd": "Dim", "value": 100, "pos": 6},
+              {"idDimmer":6, "cmd": "Dim", "value": 0, "pos": 7},
+              {"idDimmer":7, "cmd": "Dim", "value": 100, "pos": 7},
+              {"idDimmer":7, "cmd": "Dim", "value": 0, "pos": 8},
+              {"idDimmer":8, "cmd": "Dim", "value": 100, "pos": 8},
+              {"idDimmer":8, "cmd": "Dim", "value": 0, "pos": 9},
+              {"idDimmer":9, "cmd": "Dim", "value": 100, "pos": 9},
+              {"idDimmer":9, "cmd": "Dim", "value": 0, "pos": 10},
+              {"idDimmer":10, "cmd": "Dim", "value": 100, "pos": 10},
+              {"idDimmer":10, "cmd": "Dim", "value": 0, "pos": 11},
+              {"idDimmer":11, "cmd": "Dim", "value": 100, "pos": 11},
+              {"idDimmer":11, "cmd": "Dim", "value": 0, "pos": 12},
+              {"idDimmer":12, "cmd": "Dim", "value": 100, "pos": 12},
+              {"idDimmer":12, "cmd": "Dim", "value": 0, "pos": 13},
+              {"idDimmer":13, "cmd": "Dim", "value": 100, "pos": 13},
+              {"idDimmer":13, "cmd": "Dim", "value": 0, "pos": 14},
+              {"idDimmer":14, "cmd": "Dim", "value": 100, "pos": 14},
+              {"idDimmer":14, "cmd": "Dim", "value": 0, "pos": 15},
+              {"idDimmer":15, "cmd": "Dim", "value": 100, "pos": 15},
+              {"idDimmer":15, "cmd": "Dim", "value": 0, "pos": 16},
+              {"idDimmer":16, "cmd": "Dim", "value": 100, "pos": 16},
+              {"idDimmer":16, "cmd": "Dim", "value": 0, "pos": 17},
+              {"idDimmer":17, "cmd": "Dim", "value": 100, "pos": 17},
+              {"idDimmer":17, "cmd": "Dim", "value": 0, "pos": 18},
+              {"idDimmer":18, "cmd": "Dim", "value": 100, "pos": 18},
+              {"idDimmer":18, "cmd": "Dim", "value": 0, "pos": 19},
+              {"idDimmer":19, "cmd": "Dim", "value": 100, "pos": 19},
+              {"idDimmer":19, "cmd": "Dim", "value": 0, "pos": 20},
+              {"idDimmer":20, "cmd": "Dim", "value": 100, "pos": 20},
+              {"idDimmer":20, "cmd": "Dim", "value": 0, "pos": 21},
+              {"idDimmer":21, "cmd": "Dim", "value": 100, "pos": 21},
+              {"idDimmer":21, "cmd": "Dim", "value": 0, "pos": 22},
+              {"idDimmer":22, "cmd": "Dim", "value": 100, "pos": 22},
+              {"idDimmer":22, "cmd": "Dim", "value": 0, "pos": 23}
+            ]
           }
         ]
       ,
@@ -107,8 +231,8 @@
           "name": "OG/VZ",
           "input": "CONTROLLINO_A7",
           "A": [0],
-          "B": [0],
-          "C": [0],
+          "B": [6],
+          "C": [7],
           "D": [0]
         },
         "6": {

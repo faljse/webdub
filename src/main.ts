@@ -95,7 +95,7 @@ class Main {
                     actionCode+=`actions${asgIdx}[${aIdx}] = Action(0, &relay[${relay[action.idRelay].idx}], CmdType::${action.cmd}, ${action.pos}${action.value?(", "+action.value):""});\r\n`
                 }
                 if(action.idDimmer) {
-                    actionCode+=`actions${asgIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}],0, CmdType::${action.cmd}, ${action.cmd}${action.value?(", "+action.value):""});\r\n`
+                    actionCode+=`actions${asgIdx}[${aIdx}] = Action(&dimmer[${dimmer[action.idDimmer].idx}],0, CmdType::${action.cmd}, ${action.pos}, ${action.value});\r\n`
 
                 } 
                 aIdx++;
@@ -114,7 +114,7 @@ class Main {
 
         for(let id in buttons) {
             let button = buttons[id];
-            buttonsCode+=`const ActionSetGroup asg_b${id}[4] = {asg[${asgMap[button.A].idx}], asg[${asgMap[button.B].idx}], asg[${asgMap[button.C].idx}], asg[${asgMap[button.D].idx}]};\r\n`
+            buttonsCode+=`const ActionSetGroup *asg_b${id}[4] = {&asg[${asgMap[button.A].idx}], &asg[${asgMap[button.B].idx}], &asg[${asgMap[button.C].idx}], &asg[${asgMap[button.D].idx}]};\r\n`
 
             buttonsCode+=`buttons[${bIdx}] = AnalogMultiButton(${button.input}, 5, voltages, asg_b${id}, 20, 1024);\r\n`
             buttonsCode+=`pinMode(${button.input}, INPUT);\r\n`
