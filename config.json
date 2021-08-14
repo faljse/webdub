@@ -191,7 +191,23 @@
               {"idDimmer":22, "cmd": "Dim", "value": 100, "pos": 22},
               {"idDimmer":22, "cmd": "Dim", "value": 0, "pos": 23}
             ]
-          }
+          },{
+            "id":"8",
+            "name": "OG/Vorzimmer",
+            "actions": [
+              {"idDimmer":8, "cmd": "Dim", "value": 0, "pos": 1},
+              {"idDimmer":9, "cmd": "Dim", "value": 0, "pos": 1},
+
+              {"idDimmer":8, "cmd": "Dim", "value": 0, "pos": 2},
+              {"idDimmer":9, "cmd": "Dim", "value": 5, "pos": 2},
+
+              {"idDimmer":8, "cmd": "Dim", "value": 0, "pos": 3},
+              {"idDimmer":9, "cmd": "Dim", "value": 200, "pos": 3},
+
+              {"idDimmer":8, "cmd": "Dim", "value": 200, "pos": 4},
+              {"idDimmer":9, "cmd": "Dim", "value": 200, "pos": 4}
+            ]
+            }
         ]
       ,
       "Buttons": {
@@ -230,7 +246,7 @@
         "5": {
           "name": "OG/VZ",
           "input": "CONTROLLINO_A7",
-          "A": [0],
+          "A": [8],
           "B": [6],
           "C": [7],
           "D": [0]
